@@ -1015,5 +1015,14 @@ start=0;
 cumuSum=cumsum(input);
 solution1= start+cumuSum(end);
 disp(solution1)
-%Part 2
 
+%Part 2
+cumuSum2=[0; cumuSum];
+[cumSumUni,cumSumUniIdx]=unique(cumuSum2);
+while numel(cumSumUni)==numel(cumuSum2)
+    cumuSum2=[cumuSum2; cumuSum2(end)+cumuSum];
+    [cumSumUni,cumSumUniIdx]=unique(cumuSum2);
+end
+cumuSum2(cumSumUniIdx)=[];
+solution2=cumuSum2(1);
+disp(solution2)
