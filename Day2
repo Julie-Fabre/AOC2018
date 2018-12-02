@@ -1,0 +1,71 @@
+fID= fopen('AOC2018_InputDay2');
+input = textscan(fID,'%26c','Delimiter','\n');
+input=input{:};
+
+%Part1
+sz=size(input);
+count2=0;
+count3=0;
+
+for i=1:sz(1)
+    inTmp=input(i,:);
+    [a,b]=unique(inTmp);
+    if numel(a)==numel(inTmp)
+        count2=count2+0;
+        count3=count3+0;
+    else
+        inTmp2=inTmp;
+        inTmp2(b)=[];
+        inTmp3=inTmp2;
+        [~,UniIdx2]=unique(inTmp3);
+        inTmp3(UniIdx2)=[];
+        if numel(inTmp3)==0
+            count2=count2+1;
+            count3=count3+0;
+        elseif numel(inTmp3)*2==numel(inTmp2)
+            count2=count2+0;
+            count3=count3+1;
+        else
+            count2=count2+1;
+            count3=count3+1;
+        end
+    end
+end
+solution1=count2*count3;
+disp(solution1)
+
+%Part2
+diffCount=0;
+simCount=0;
+for i=1:sz(1)
+    inTmp=input(i,:);
+    for j=i+1:sz(1)
+        inTmpC=input(j,:);
+        diffCount=0;
+        for k=1:sz(2)
+            
+            if inTmp(k)==inTmpC(k)
+                diffCount=diffCount+0;
+            else
+                diffCount=diffCount+1;
+                diffLet=k;
+            end
+            if diffCount==2
+               break
+            end
+        end
+        if diffCount==1
+            simCount=simCount+1;
+            solution2=[i,diffLet];
+        end
+        
+    end
+end
+if simCount~=1
+    disp('ERROR')
+else 
+    solution2=input(solution2(1),1:end ~= solution2(2));
+end
+
+disp(solution2) 
+fclose(fileID);
